@@ -10,7 +10,7 @@ from game_logic.colors import Red, Blue, Grey
 
 def main():
     player1 = MinimaxPlayer(Red())
-    player2 = HumanPlayer(Blue())
+    player2 = MinimaxPlayer(Blue())
     game = Game(players=[player1, player2])
     game.play()
 

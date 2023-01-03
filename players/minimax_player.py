@@ -77,7 +77,7 @@ class MinimaxPlayer(Player):
             options = []
             for move in list_of_possible_moves:
                 game_state.mutable_make_move(move)
-                e = self.heuristically_evaluate_state(game_state ,not is_maximizing_player)
+                e = self.heuristically_evaluate_state(game_state, not is_maximizing_player)
                 game_state.mutable_undo_move(move)
                 options.append((e,move))
             return optimization_function(options, key= lambda x:x[0])
