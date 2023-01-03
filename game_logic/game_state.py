@@ -12,5 +12,13 @@ class GameState:
     def make_move(self, column):
         new_board = self.board.make_move(column, self.get_current_color())
         return GameState(self.colors, new_board, self.current_move+1)
+    def mutable_make_move(self, column):
+        self.board.mutable_make_move(column, self.get_current_color())
+        self.current_move +=1
+        return self
+    def mutable_undo_move(self, column):
+        self.board.mutable_undo_move(column)
+        self.current_move -=1
+        return self
     def __str__(self):
         return f'current turn: {self.current_move}\n Player to move: {self.get_current_color()} \n board:\n{self.board}'

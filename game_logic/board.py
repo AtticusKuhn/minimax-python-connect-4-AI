@@ -31,16 +31,19 @@ class Board:
         new_board = Board(rows, len(my_list))
         new_board.board = my_list
         return new_board
+    def mutable_make_move(self, column, player):
+        self.board[column].append(player)
+    def mutable_undo_move(self, column):
+        self.board[column].pop()
     @lru_cache(maxsize=None)
     def make_move(self, column, player):
         board_copy = deepcopy(self.board)
-        # if 0 > column or column > self.columns:
-        #     raise Exception(f'column {column} is outside of the board, you cannnot go there.')
-        # if len(board_copy[column]) >= self.rows:
-        #     raise Exception(f'column {column} is already full. You cannot go there')
+        if 0 > column or column > self.columns:
+            raise Exception(f'column {column} is outside of the board, you cannnot go there.')
+        if len(board_copy[column]) >= self.rows:
+            raise Exception(f'column {column} is already full. You cannot go there')
         board_copy[column].append(player)
         return Board.from_list(self.rows, board_copy)
-        # return Board(self.rows, self.columns,board_copy )
     def is_full(self):
         return all([len(column) ==  self.rows for column in self.board])
     def is_in_bounds(self, x,y):
@@ -59,7 +62,7 @@ class Board:
                 return cells[0]
         return None
     def not_blank(self, cell):
-        return not cell.equals(Grey())
+        return cell.not_grey()
     def get_possible_moves(self):
         if self.is_game_over():
             return []
@@ -67,8 +70,6 @@ class Board:
     def homogenous(self, cells):
         return all([c.equals(cells[0]) for c in cells])
     def get_cell(self, x,y):
-        # if not self.is_in_bounds(x,y):
-        #     raise Exception(f'point ({x}, {y}) is not within the game board')
         if y >= len(self.board[x]):
             return Grey()
         return self.board[x][y]

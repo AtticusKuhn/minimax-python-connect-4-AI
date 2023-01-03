@@ -20,7 +20,7 @@ class Game:
         print(str(self.game_state))
         player = self.get_current_player()
         move = player.get_move(self.game_state)
-        self.game_state = self.game_state.make_move(move)
+        self.game_state.mutable_make_move(move)
         
                 
         
